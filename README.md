@@ -30,8 +30,7 @@ Answer Engine Optimization (AEO) is the next evolution of SEO, focusing on optim
 ## Features
 
 ### Content Generation
-- **AEO-optimized HTML** with Schema.org microdata
-- **8 types of JSON-LD schemas**: Article, FAQPage, HowTo, BreadcrumbList, SpeakableSpecification, WebSite, Organization, Person
+- **AEO-optimized HTML** with Schema markup and JSON-LD microdata
 - **Up to 3 citation sources** for references
 - **Dynamic Table of Contents** generation
 - **Voice AI optimization** with Speakable specification
