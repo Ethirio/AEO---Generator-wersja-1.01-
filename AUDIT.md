@@ -56,7 +56,7 @@ Stan `generatedContent` jest przekazywany do ResultsPanel, a setter do `ContentF
 
 home, enterprise, how-it-works i plans zależą od ui/button, ui/card, ui/sheet, Footer i logo z aliasu @assets oraz pakietów React, Wouter i Lucide. Card.tsx eksportuje NotFound, sam importuje ui/card i Lucide. Nazwa pliku Card.tsx nie oznacza, że spełnia importy ui/card: nie eksportuje Card ani CardContent.
 
-Pełna macierz brakujących ścieżek i użytkowników znajduje się w poprawionym README. Jest 14 unikalnych niedostarczonych specyfikatorów importu: 13 modułów i jeden zasób PNG. Brakuje mapowania wszystkich trzech rodzin aliasów: @/, @shared/ i @assets/.
+Pełna macierz brakujących ścieżek i użytkowników znajduje się w poprawionym README. Jest 13 unikalnych niedostarczonych specyfikatorów importu: 12 modułów i jeden zasób PNG. Brakuje mapowania wszystkich trzech rodzin aliasów: @/, @shared/ i @assets/.
 
 ## Błędy struktury źródeł
 
