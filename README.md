@@ -1,158 +1,108 @@
-[README.md](https://github.com/user-attachments/files/24123959/README.md)
-# AEOFLOW - Answer Engine Optimization Generator
+# AEOFLOW — fragmenty kodu interfejsu
 
-<p align="center">
-  <img src="attached_assets/logoA_1761940165908.png" alt="AEOFLOW Logo" width="120">
-</p>
+> **Status:** to repozytorium zawiera niekompletny zestaw plików React/TypeScript. Nie zawiera kompletnej, samodzielnie uruchamialnej aplikacji SaaS.
 
-<p align="center">
-  <strong>Professional SaaS platform for generating AI-optimized content with structured data</strong>
-</p>
+AEOFLOW jest projektem związanym z Answer Engine Optimization (AEO). Udostępniony kod pokazuje fragmenty stron marketingowych oraz interfejsu generatora i panelu użytkownika. Opisy funkcji produktu w JSX nie stanowią dowodu ich implementacji.
 
-<p align="center">
-  <a href="https://aeoflow.io">Live Demo</a> •
-  <a href="#features">Features</a> •
-  <a href="#tech-stack">Tech Stack</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#api-reference">API</a>
-</p>
+## Zakres weryfikacji
 
----
+Dokumentacja została opracowana na podstawie całego drzewa `main` z 9 października 2026 r., commit [8be91d54bcbaf0204dbfc3fc68249d320126c9ad](https://github.com/Ethirio/AEO---Generator-wersja-1.01-/commit/8be91d54bcbaf0204dbfc3fc68249d320126c9ad), z 12 grudnia 2025 r. Przed zmianami dokumentacji dostępna była jedna gałąź: `main`.
 
-## Overview
+Nie ustalono, czy pełna aplikacja znajduje się w innym repozytorium, prywatnym projekcie lub środowisku wdrożeniowym. Brak elementu tutaj nie oznacza jego nieistnienia poza tym repozytorium. Witryna [aeoflow.io](https://aeoflow.io/) była wskazana w poprzednim README; jej kod, aktualne działanie i powiązanie z tym commitem nie zostały zweryfikowane.
 
-AEOFLOW is a paid SaaS application that generates Answer Engine Optimization (AEO) content, specifically structured for AI search engines and voice assistants. It incorporates Schema.org-compliant HTML and JSON-LD markup to enhance content visibility and understanding by AI systems like ChatGPT, Google SGE, Perplexity, and voice assistants.
+## Faktyczna zawartość kodu
 
-### What is AEO?
+| Plik | Zawartość i ograniczenia |
+| --- | --- |
+| `Card.tsx` | Eksportuje stronę `NotFound` (404). Importuje zewnętrzny wobec tego zestawu moduł `@/components/ui/card`; sam go nie zastępuje. |
+| `dashboard.tsx` | Fragment panelu: hook uwierzytelniania, zapytanie o treści, kopiowanie HTML, żądanie usunięcia, sprawdzanie planu i przekierowanie do płatności. Plik urywa się w JSX. |
+| `enterprise.tsx` | Widok marketingowy Enterprise. Brakuje zamknięcia głównego `<div>` przed zakończeniem `return`. |
+| `generator.tsx` | Powłoka widoku: łączy formularz i panel wyników przez stan React. Nie zawiera algorytmu generowania. |
+| `home.tsx` | Fragment strony głównej. Plik urywa się po sekcji zastosowań, bez zakończenia JSX i funkcji. |
+| `how-it-works.tsx` | Strona informacyjna z opisami i przykładami kodu; przykłady nie są silnikiem generatora. |
+| `plans.tsx` | Fragment strony cennika; kończy się po nagłówku nawigacyjnym, bez zakończenia JSX i funkcji. |
+| `example` | Plik zawierający jedynie znak nowej linii; brak działającego przykładu. |
+| `README.md` | Dokumentacja repozytorium. |
 
-Answer Engine Optimization (AEO) is the next evolution of SEO, focusing on optimizing content for AI-powered search engines and voice assistants that provide direct answers rather than traditional link lists.
+Wszystkie powyższe pliki znajdują się w katalogu głównym. Nie ma katalogów `client/`, `server/`, `shared/` ani manifestu `package.json`. Szczegóły ustaleń znajdują się w [AUDIT.md](AUDIT.md).
 
-## Features
+## Zależności widoczne w kodzie
 
-### Content Generation
-- **AEO-optimized HTML** with Schema markup and JSON-LD microdata
-- **Up to 3 citation sources** for references
-- **Dynamic Table of Contents** generation
-- **Voice AI optimization** with Speakable specification
+Importy wskazują na pakiety `react`, `wouter`, `lucide-react` i `@tanstack/react-query`. Ich wersje i pełna lista zależności są nieznane: brak manifestu i pliku blokady. Klasy CSS sugerują użycie Tailwind CSS, ale nie ma arkuszy ani konfiguracji potwierdzających odtwarzalny wygląd.
 
-### AI Readiness Scoring
-- Real-time content validation
-- AI optimization criteria scoring
-- Visual feedback with progress indicators
-- Actionable improvement suggestions
+Następujące moduły są importowane, lecz nie są dostarczone:
 
-### Generated Output Includes
-- HTML Microdata Fragment
-- Open Graph & Twitter Meta Tags
-- Speakable specification for Voice AI
-- Complete JSON-LD structured data
-- Mobile-responsive styling
-- Professional typography (Inter font family)
+| Import | Pliki korzystające |
+| --- | --- |
+| `@/components/navigation` | generator, dashboard |
+| `@/components/content-form` | generator |
+| `@/components/results-panel` | generator |
+| `@shared/schema` (`AeoContent`, `User`) | generator, dashboard |
+| `@/components/ui/card` | Card, dashboard, enterprise, home, how-it-works, plans |
+| `@/components/ui/button` | dashboard, enterprise, home, how-it-works, plans |
+| `@/components/ui/sheet` | enterprise, home, how-it-works, plans |
+| `@/components/ui/progress` | dashboard |
+| `@/components/Footer` | enterprise, home, how-it-works, plans |
+| `@/hooks/use-toast`, `@/hooks/useAuth` | dashboard |
+| `@/lib/queryClient` (`apiRequest`, `queryClient`) | dashboard |
+| `@assets/logoA_1761940165908.png` | enterprise, home, how-it-works, plans |
 
-### Business Features
-- **Subscription model**: Lite plan with 10 pages/day limit
-- **Stripe integration** for payments
-- **Google OAuth** and Email/Password authentication
-- **User dashboard** for content management
-- **Daily usage tracking** with automatic reset
+Brakuje również konfiguracji rozwiązywania aliasów `@`, `@shared` i `@assets`. Ich docelowe ścieżki należy potwierdzić; nie można ich odtworzyć wyłącznie z importów.
 
-## Tech Stack
+## Co jest potwierdzone, a co wymaga kodu źródłowego
 
-### Frontend
-- **React 18** with TypeScript
-- **Vite** for build tooling
-- **Tailwind CSS** for styling
-- **Shadcn/UI** (Radix UI primitives)
-- **TanStack Query** for state management
-- **Wouter** for client-side routing
-- **React Hook Form** with Zod validation
+- **Potwierdzone:** komponenty i fragmenty widoków React/TSX, stan łączący formularz z panelem wyników oraz fragment logiki panelu.
+- **Niezweryfikowane implementacje:** generowanie HTML/JSON-LD/metadanych, AI Readiness Score, walidacja treści, backend Express, baza PostgreSQL, Drizzle ORM, Passport, Google OAuth, rejestracja i logowanie, Stripe Checkout/Portal/webhooki oraz reset i egzekwowanie limitów.
+- React 18, Node.js 18+, Vite, Radix/Shadcn, React Hook Form i Zod były wymienione w poprzednim README. Bez manifestu i brakujących modułów nie można potwierdzić tych wersji ani pełnego stosu.
 
-### Backend
-- **Node.js** with Express.js
-- **TypeScript** for type safety
-- **Passport.js** for authentication
-- **Drizzle ORM** for database operations
+W `dashboard.tsx` zapisano limit `10` i warunek `plan === 'lite' && subscriptionStatus === 'active'`. Jest to logika klienta, nie dowód egzekwowania limitu ani kontroli uprawnień po stronie serwera.
 
-### Database
-- **PostgreSQL** (Neon Database compatible)
-- Type-safe schema with Zod validation
+## API i routing
 
-### Payments
-- **Stripe** Checkout and webhooks
-- Customer Portal integration
+`dashboard.tsx` deklaruje klucz zapytania `/api/user/aeo-content` i wywołuje `apiRequest("DELETE", "/api/aeo-content/${id}")`. Nie ma implementacji serwera ani konfiguracji domyślnego `queryFn`, więc samo `queryKey` nie dowodzi wykonania GET.
 
-## Installation
+Endpointy logowania, generowania i Stripe z poprzedniego README należy traktować jako niezweryfikowane deklaracje. Nie są specyfikacją działającego API w tym repozytorium.
 
-### Prerequisites
-- Node.js 18+
-- PostgreSQL database
-- Stripe account (for payments)
-- Google OAuth credentials (for authentication)
+Widoki odsyłają m.in. do `/`, `/o-nas`, `/jak-dziala-aeo`, `/cennik`, `/enterprise`, `/blog` i `/logowanie`. Panel przekierowuje do `/pricing?priceId=…&plan=lite`, a strona informacyjna używa `/logowanie?returnTo=/pricing`. Brak routera uniemożliwia potwierdzenie mapowania tych ścieżek. Należy wyjaśnić relację `/cennik` i `/pricing`.
 
-## Project Structure
+## Uruchomienie
 
-```
-├── client/                 # Frontend React application
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Route pages
-│   │   ├── lib/            # Utilities and AEO generator
-│   │   └── hooks/          # Custom React hooks
-│   └── public/             # Static assets
-├── server/                 # Backend Express application
-│   ├── routes.ts           # API endpoints
-│   ├── storage.ts          # Database operations
-│   ├── auth.ts             # Authentication logic
-│   └── index.ts            # Server entry point
-├── shared/                 # Shared types and schemas
-│   └── schema.ts           # Drizzle ORM schema
-└── package.json
-```
+**Nie ma zweryfikowanej instrukcji uruchomienia tego zestawu.** Brak `package.json` oznacza brak deklaracji zależności i skryptów instalacji, budowania, testów oraz startu. Samo doinstalowanie React nie usuwa brakujących importów ani błędów struktury TSX.
 
-## API Reference
+Przed publikacją instrukcji uruchomienia należy:
 
-### Authentication
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/auth/user` | GET | Get current user |
-| `/api/auth/register` | POST | Register with email/password |
-| `/api/auth/login` | POST | Login with email/password |
-| `/api/auth/logout` | POST | Logout current user |
-| `/auth/google` | GET | Google OAuth login |
+1. Wskazać kanoniczne źródło kompletnego projektu i określić rolę tego repozytorium: fragmenty, archiwum, frontend czy pełna aplikacja.
+2. Przywrócić pełne pliki TSX oraz wszystkie importowane komponenty, hooki, typy, narzędzia i zasoby.
+3. Dostarczyć manifest, plik blokady, potwierdzoną wersję środowiska, konfigurację TypeScript/build/aliasów, punkt wejścia React, HTML, router, providery i style.
+4. Dostarczyć backend albo opisać istniejącą usługę API wraz z adresem, kontraktami, uwierzytelnianiem i zasadami dostępu.
+5. Jeśli celem jest pełny SaaS: uzupełnić schemat bazy, migracje, logowanie, integrację Stripe, kontrolę dostępu i limity po stronie serwera.
+6. Udokumentować nazwy wymaganych zmiennych środowiskowych i przygotować przykład bez sekretów, konfigurację OAuth/webhooków oraz rozdzielenie środowisk.
+7. Zweryfikować instalację, kompilację i podstawowe przepływy na czystym checkoutcie; dopiero potem podać rzeczywiście działające komendy.
 
-### Content
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/aeo-content` | POST | Generate AEO content |
-| `/api/user/aeo-content` | GET | Get user's content |
-| `/api/aeo-content/:id` | DELETE | Delete content |
+## Informacje do uzupełnienia przez właściciela
 
-### Payments
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/stripe/create-checkout` | POST | Create Stripe checkout |
-| `/api/stripe/portal` | POST | Access customer portal |
-| `/api/stripe/webhook` | POST | Stripe webhook handler |
+- Lokalizacja i wymagany dostęp do pełnego kodu; repozytorium/gałąź/commit stanowiące źródło wdrożenia.
+- Docelowa struktura katalogów i dokładne mapowanie aliasów.
+- Wersje zależności, wymagania środowiska i polecenia development/build/start/test.
+- Schematy `AeoContent` i `User`, kontrakty API i konfiguracja pobierania danych.
+- Lokalizacja generatora i kryteriów AI Readiness Score oraz przykładowe wejście/wyjście i walidacja.
+- Aktualne plany, limity i konfiguracja produktów/cen Stripe; w panelu znajduje się stały identyfikator ceny wymagający weryfikacji.
+- Mapowanie tras, konfiguracja stylów, zasoby i testy.
+- Aktualny adres kontaktowy: poprzednie README wskazuje `support@aeoflow.io`, a przycisk Enterprise używa `kontakt@aeo-generator.pl`.
 
-## License
+## Prawa do kodu i kontakt
 
-Copyright (c) 2025 Ethirion Sp. z o.o.
+Zachowano deklarację praw z poprzedniego README:
 
-All rights reserved.
+Copyright (c) 2025 Ethirion Sp. z o.o. All rights reserved.
 
 This software and its source code are proprietary.
-Unauthorized copying, modification, distribution or use
-of this software, via any medium, is strictly prohibited.
+Unauthorized copying, modification, distribution or use of this software, via any medium, is strictly prohibited.
 
-## Contact
-- **Website**: https://aeoflow.io/
-- **Company**: Ethirion Sp. z o.o.
-- **Email**: support@aeoflow.io
-- **Phone**: +48 668 392 135
-- **Address**: 3 Maja 23, 42-400 Zawiercie, Poland
+W repozytorium nie ma osobnego pliku LICENSE. Zakres uprawnień i aktualność danych kontaktowych powinien potwierdzić właściciel.
 
----
-
-<p align="center">
-  Made with ❤️ by <a href="https://aeoflow.io">AEOFLOW</a>
-</p>
+- Witryna wskazana przez projekt: https://aeoflow.io/
+- Firma: Ethirion Sp. z o.o.
+- E-mail z poprzedniego README: support@aeoflow.io
+- Telefon: +48 668 392 135
+- Adres: 3 Maja 23, 42-400 Zawiercie, Polska
